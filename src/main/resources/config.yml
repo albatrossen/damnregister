@@ -1,0 +1,14 @@
+# url the call when a player calls /register
+url: http://localhost/xmlrpc.php
+
+#body is the url which is sent to the url
+# %1$s will be replaced with the minecraft username
+# %2$s will be replaced with with the first argument passed to the /register method
+body: <?xml version="1.0"?><methodCall><methodName>damn.register</methodName><params><param><value><string>%1$s</string></value></param><param><value><string>%2$s</string></value></param><param><value><string>secret</string></value></param></params></methodCall>
+
+#
+answers:
+  - response: "<?xml version=\"1.0\"?>\n\n<methodResponse>\n  <params>\n  <param>\n    <value><boolean>1</boolean></value>\n  </param>\n  </params>\n</methodResponse>"
+    answer: A mail has been sent to you with further information
+  - response: "<?xml version=\"1.0\"?>\n\n<methodResponse>\n  <params>\n  <param>\n    <value><boolean>0</boolean></value>\n  </param>\n  </params>\n</methodResponse>"
+    answer: Contact an admin an ask them to fix the secrets in the /register module

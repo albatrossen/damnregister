@@ -1,0 +1,14 @@
+name: DamnRegister
+main: dk.elera.damnation.register.Register
+version: 1.0
+
+commands:
+  register:
+    description: Register with server to apply for build rights
+    usage: /<command> your.email@example.com
+    permission: damnregister.register
+    permission-message: You don't have <permission>
+permissions:
+  damnregister.register:
+    description: Gives access to the /register command
+    default: op
