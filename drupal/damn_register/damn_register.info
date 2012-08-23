@@ -1,0 +1,4 @@
+name = Damn Register
+description = Allow creation of users using XML-RPC
+core = 7.x
+configure = admin/settings/damnregister

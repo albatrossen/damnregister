@@ -1,0 +1,64 @@
+<?php
+/*
+ *  Copyright 2012 Jes Andersen
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+ 
+ /**
+ *
+ */
+function damn_register($username,$email,$secret) {
+  if ($secret != variable_get('damnregister_secret', '')) {
+    return false;
+  }
+  $user = user_load_by_name($username);
+  $user = user_save($user, array('mail'=>$email, 'name'=>$username, 'status'=>1));
+  _user_mail_notify('register_no_approval_required',$user);
+  return true;
+}
+
+function damn_register_settings($form, &$form_state) {
+  $form['damnregister_secret'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Shared Secret'),
+    '#default_value' => variable_get('damnregister_secret', 'secret'),
+    '#size' => 20,
+    '#description' => t("Shared secret needed to create users"),
+    '#required' => TRUE,
+  );
+
+  return system_settings_form($form);
+}
+
+function damn_register_xmlrpc() {
+  return array(
+    array(
+      'damn.register',
+      'damn_register',
+      array('boolean', 'string', 'string', 'string'),
+      t('Register a new user'),
+    ),
+  );
+}
+
+function damn_register_menu() {
+  $items['admin/settings/damnregister'] = array(
+    'title' => 'DamnRegister', 
+    'description' => 'This page is used to setup the settings for DamnRegister', 
+    'page callback' => 'drupal_get_form', 
+    'page arguments' => array('damn_register_settings'), 
+    'access arguments' => array('administer damn_register'), 
+  );
+  return $items;
+}
