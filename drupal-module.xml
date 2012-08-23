@@ -1,0 +1,13 @@
+<assembly>
+  <id>drupal-module</id>
+  <formats>
+    <format>zip</format>
+    <format>tar.gz</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+     <directory>drupal</directory>
+     <outputDirectory>/</outputDirectory>
+    </fileSet>
+  </fileSets>
+</assembly>
